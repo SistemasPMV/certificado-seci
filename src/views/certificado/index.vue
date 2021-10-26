@@ -1,29 +1,20 @@
 <template>
-  <main>
-    <input v-model="nome" type="text" />
+  <div>
     <img
       style="display: none"
       ref="imageCertificado"
-      src="../assets/certificado.png"
+      src="../../assets/certificado.png"
     />
-    <button @click="generatePDF()">Gerar Certificado</button>
-  </main>
+  </div>
 </template>
 
 <script>
 import { jsPDF } from "jspdf";
 
 export default {
-  name: "Home",
-  data() {
-    return {
-      nome: "",
-    };
-  },
+  name: "Certificado",
+  props: {},
   methods: {
-    GerarCertificado() {
-      this.$router.push("certificado");
-    },
     generatePDF() {
       const doc = new jsPDF({
         orientation: "landscape",
@@ -34,11 +25,15 @@ export default {
       var height = doc.internal.pageSize.getHeight();
 
       doc.addImage(this.$refs.imageCertificado, "PNG", 0, 0, width, height);
-      doc.text(this.nome.toUpperCase(), 110, 106);
-      doc.text('26/10/2021', 98, 133);
       //doc.save("certificado.pdf");
-      doc.output("dataurlnewwindow");
+      var string = doc.output("datauri");
+      var x = window.open();
+      x.document.open();
+      x.document.location = string;
     },
+  },
+  mounted() {
+    this.generatePDF();
   },
 };
 </script>

@@ -1,7 +1,5 @@
 <template>
   <div class="hello">
-    <br/>
-    <img src="../assets/certificado.png" />
   </div>
 </template>
 
